@@ -24,7 +24,7 @@
     <div class="brand"><div class="mark">M</div><span>MINGWE</span></div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
       <span class="network">● TEZOS SHADOWNET</span>
-      <button class="connect" id="connectBtn">Connect wallet</button>
+      <button class="connect" id="connectBtn">Connect Temple</button>
     </div>
   </header>
 
@@ -72,51 +72,133 @@
       <div class="field"><div class="field-top"><span>Connected address</span><span id="walletState">Disconnected</span></div><div id="walletAddress" style="font-size:13px;overflow-wrap:anywhere;color:var(--muted)">Connect wallet to display your address.</div></div>
       <div class="field"><div class="field-top"><span>XTZ balance</span><span>Shadownet</span></div><div class="amount-row"><div class="amount" id="balanceValue">—</div><span class="token">XTZ</span></div></div>
       <div class="notice"><strong>Testnet safety</strong><br>Use testnet funds only. Never enter your private key or seed phrase on this page. Swap and liquidity are intentionally disabled until the pool contract is verified.</div>
-      <div class="status" id="walletStatus">Wallet connection uses Beacon-compatible wallets.</div>
+      <div class="status" id="walletStatus">Temple Wallet connection via Beacon (TZIP-10).</div>
     </div>
   </section>
   <footer class="bottom"><span>MINGWE AMM · Testnet preview</span><span>Token: <a href="https://shadownet.tzkt.io/KT1XWATXQf1kWP6hk8MYZnJeW1cX5vmcajs6/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a></span></footer>
 </div>
 <script type="module">
+  // Wallet integration: Taquito + Beacon (Temple-compatible TZIP-10)
+  // Security fix: use Taquito/Beacon version 25.1.1 or newer.
   const RPC = "https://rpc.shadownet.teztnets.com";
   const connectBtn = document.getElementById("connectBtn");
   let walletClient = null;
-  const short = (s) => s ? s.slice(0,8) + "…" + s.slice(-6) : "—";
-  async function getBalance(address) {
-    const response = await fetch(`${RPC}/chains/main/blocks/head/context/contracts/${address}/balance`);
-    if (!response.ok) throw new Error("Unable to read balance from Shadownet RPC");
-    const mutez = await response.text();
-    return (Number(mutez) / 1_000_000).toFixed(4);
+  let tezos = null;
+  let accountEventSubscription = null;
+
+  const short = (s) => s ? `${s.slice(0, 8)}…${s.slice(-6)}` : "—";
+  const setStatus = (message) => {
+    document.getElementById("walletStatus").textContent = message;
+  };
+
+  async function loadWalletSdk() {
+    const [{ BeaconWallet, BeaconEvent }, { TezosToolkit }] = await Promise.all([
+      import("https://esm.sh/@taquito/beacon-wallet@25.1.1"),
+      import("https://esm.sh/@taquito/taquito@25.1.1")
+    ]);
+    return { BeaconWallet, BeaconEvent, TezosToolkit };
   }
-  connectBtn.addEventListener("click", async () => {
+
+  async function initWallet() {
+    const { BeaconWallet, BeaconEvent, TezosToolkit } = await loadWalletSdk();
+    tezos = new TezosToolkit(RPC);
+    walletClient = new BeaconWallet({
+      name: "MINGWE AMM",
+      iconUrl: "https://mingwe-token.github.io/mingwe/",
+      network: { type: "shadownet" },
+      enableMetrics: false
+    });
+
+    // Follow account changes made inside Temple while the dApp is open.
+    accountEventSubscription = await walletClient.client.subscribeToEvent(
+      BeaconEvent.ACTIVE_ACCOUNT_SET,
+      async (account) => {
+        if (account?.address) await renderConnectedAccount(account.address);
+      }
+    );
+  }
+
+  async function renderConnectedAccount(address) {
+    if (!address) return;
+    tezos.setWalletProvider(walletClient);
+    document.getElementById("walletAddress").textContent = address;
+    document.getElementById("walletState").textContent = "Connected · Shadownet";
+    connectBtn.textContent = short(address);
+    connectBtn.title = "Click to disconnect wallet";
+    try {
+      // Taquito returns a BigNumber in mutez; avoid parsing raw RPC JSON by hand.
+      const balanceMutez = await tezos.tz.getBalance(address);
+      const balance = (balanceMutez.toNumber() / 1_000_000).toFixed(4);
+      document.getElementById("balanceValue").textContent = balance;
+      document.getElementById("xtzBalance").textContent = `${balance} XTZ`;
+      setStatus("Temple/Beacon wallet connected to Shadownet. Balance refreshed.");
+    } catch (error) {
+      console.error("Shadownet balance read failed", error);
+      document.getElementById("balanceValue").textContent = "Unavailable";
+      document.getElementById("xtzBalance").textContent = "Balance unavailable";
+      setStatus("Wallet connected; balance could not be read from Shadownet RPC.");
+    }
+  }
+
+  async function connectWallet() {
     connectBtn.disabled = true;
     connectBtn.textContent = "Connecting…";
     try {
-      const [{ BeaconWallet }, { NetworkType }, { TezosToolkit }] = await Promise.all([
-        import("https://esm.sh/@taquito/beacon-wallet@21.0.0"),
-        import("https://esm.sh/@airgap/beacon-sdk@4.2.0"),
-        import("https://esm.sh/@taquito/taquito@21.0.0")
-      ]);
-      const tezos = new TezosToolkit(RPC);
-      walletClient = new BeaconWallet({ name: "MINGWE AMM", preferredNetwork: NetworkType.SHADOWNET });
-      await walletClient.requestPermissions({ network: { type: NetworkType.SHADOWNET, rpcUrl: RPC } });
-      tezos.setWalletProvider(walletClient);
+      if (!walletClient) await initWallet();
+      // Network is configured in BeaconWallet constructor; current API asks
+      // requestPermissions() without a network argument.
+      await walletClient.requestPermissions();
       const address = await walletClient.getPKH();
-      document.getElementById("walletAddress").textContent = address;
-      document.getElementById("walletState").textContent = "Connected";
-      document.getElementById("walletStatus").textContent = "Wallet connected to Shadownet.";
-      connectBtn.textContent = short(address);
-      const balance = await getBalance(address);
-      document.getElementById("balanceValue").textContent = balance;
-      document.getElementById("xtzBalance").textContent = `${balance} XTZ`;
+      await renderConnectedAccount(address);
     } catch (error) {
-      console.error(error);
-      document.getElementById("walletStatus").textContent = error?.message || "Connection cancelled or failed.";
-      connectBtn.textContent = "Connect wallet";
+      console.error("Temple wallet connection failed", error);
+      setStatus(error?.message || "Connection cancelled or failed.");
+      connectBtn.textContent = "Connect Temple";
     } finally {
       connectBtn.disabled = false;
     }
+  }
+
+  async function disconnectWallet() {
+    connectBtn.disabled = true;
+    try {
+      if (walletClient) await walletClient.disconnect();
+      walletClient = null;
+      tezos = null;
+      accountEventSubscription = null;
+      document.getElementById("walletAddress").textContent = "Connect wallet to display your address.";
+      document.getElementById("walletState").textContent = "Disconnected";
+      document.getElementById("balanceValue").textContent = "—";
+      document.getElementById("xtzBalance").textContent = "Wallet not connected";
+      connectBtn.textContent = "Connect Temple";
+      connectBtn.title = "Connect Temple Wallet";
+      setStatus("Wallet disconnected.");
+    } catch (error) {
+      console.error("Wallet disconnect failed", error);
+      setStatus(error?.message || "Could not disconnect wallet.");
+    } finally {
+      connectBtn.disabled = false;
+    }
+  }
+
+  connectBtn.textContent = "Connect Temple";
+  connectBtn.addEventListener("click", () => {
+    if (walletClient) disconnectWallet();
+    else connectWallet();
   });
+
+  // Reconnect a previously approved Beacon session without reopening the prompt.
+  (async () => {
+    try {
+      await initWallet();
+      const activeAccount = await walletClient.client.getActiveAccount();
+      if (activeAccount?.address) await renderConnectedAccount(activeAccount.address);
+    } catch (error) {
+      // No existing pairing is normal for first-time visitors.
+      console.info("No saved wallet session", error?.message || error);
+    }
+  })();
+
   document.getElementById("swapTab").addEventListener("click", () => {
     document.getElementById("swapTab").classList.add("active");
     document.getElementById("liquidityTab").classList.remove("active");
