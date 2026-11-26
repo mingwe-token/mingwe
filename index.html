@@ -77,11 +77,11 @@
       <div class="status" id="walletStatus">Temple Wallet connection via Beacon (TZIP-10).</div>
     </div>
   </section>
-  <footer class="bottom"><span>MINGWE AMM · Shadownet preview</span><span>Token: <a id="tokenExplorer" href="https://shadownet.tzkt.io/KT1XWATXQf1kWP6hk8MYZnJeW1cX5vmcajs6/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a> · Data provided by <a href="https://tzkt.io" target="_blank" rel="noreferrer">TzKT API</a></span></footer>
+  <footer class="bottom"><span>MINGWE AMM · Shadownet preview</span><span>Token: <a id="tokenExplorer" href="https://shadownet.tzkt.io/KT1EHpDFoRiiJriVgEkfYXeH8ALZ99NiJDFy/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a> · Data provided by <a href="https://tzkt.io" target="_blank" rel="noreferrer">TzKT API</a></span></footer>
 </div>
 <script type="module">
 const NET={shadownet:{label:'Shadownet',rpc:'https://rpc.shadownet.teztnets.com',api:'https://api.shadownet.tzkt.io',beacon:'shadownet',explorer:'https://shadownet.tzkt.io'}};
-const MINGWE={network:'shadownet',contract:'KT1XWATXQf1kWP6hk8MYZnJeW1cX5vmcajs6',tokenId:0,name:'MINGWE',symbol:'MINGWE',decimals:null};
+const MINGWE={network:'shadownet',contract:'KT1EHpDFoRiiJriVgEkfYXeH8ALZ99NiJDFy',tokenId:0,name:'MINGWE',symbol:'MINGWE',decimals:null};
 // A pool is only added here after its chain, code hash, ABI, pair and storage are audited.
 const VERIFIED_POOLS={shadownet:[]};
 let chain='shadownet',token={...MINGWE},account=null,wallet=null,toolkit=null,BeaconWallet,BeaconEvent,TezosToolkit,debounce;
