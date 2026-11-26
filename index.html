@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>MINGWE AMM — Shadownet</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090d18;--panel:#11182a;--panel2:#151e33;--line:#25314b;--text:#edf2ff;--muted:#9aa8c4;--cyan:#74e0d0;--violet:#9b8cff;--good:#75d7a3;--warn:#f0c879}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(900px 500px at 85% -10%,#20274a 0%,transparent 60%),var(--bg);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text)}
+    .wrap{max-width:1120px;margin:auto;padding:28px 20px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:58px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.12em}.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--violet));display:grid;place-items:center;color:#09111c;font-weight:900;font-size:20px}
+    .network{font-size:12px;border:1px solid #3b4968;border-radius:999px;padding:8px 12px;color:var(--cyan);background:#111a2c}
+    .connect{border:0;border-radius:13px;padding:12px 17px;background:var(--cyan);color:#07151a;font-weight:800;cursor:pointer}.connect:disabled{opacity:.55;cursor:wait}
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;margin-bottom:38px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:.16em;font-weight:800}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.04;letter-spacing:-.05em;margin:13px 0}.hero h1 span{color:var(--cyan)}.hero p{color:var(--muted);max-width:530px;margin:0 0 24px}.tagline{display:flex;gap:9px;flex-wrap:wrap}.pill{font-size:12px;color:#bfcbe2;background:#172139;border:1px solid #2b3855;border-radius:999px;padding:7px 11px}
+    .statcard,.card{background:linear-gradient(150deg,#151e32,#0f1627);border:1px solid var(--line);border-radius:24px;box-shadow:0 20px 70px #0002}.statcard{padding:25px}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.stat-value{font-size:32px;font-weight:800;margin:18px 0 4px}.stat-sub{color:var(--muted);font-size:13px}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.mini{padding:14px;border-radius:15px;background:#0c1322;border:1px solid #202c44}.mini label{display:block;color:var(--muted);font-size:12px}.mini strong{display:block;margin-top:6px;font-size:17px}
+    .main{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{padding:22px}.tabs{display:flex;background:#0a1120;border:1px solid #202b42;border-radius:14px;padding:5px;gap:5px;margin-bottom:22px}.tab{flex:1;border:0;background:transparent;color:var(--muted);padding:10px;border-radius:10px;font-weight:700;cursor:pointer}.tab.active{background:#26314b;color:var(--text)}.card h2{margin:0 0 5px;font-size:20px}.desc{color:var(--muted);font-size:13px;margin:0 0 20px}.field{background:#0a1120;border:1px solid #26324a;border-radius:16px;padding:14px;margin:12px 0}.field-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:10px}.amount-row{display:flex;align-items:center;gap:10px}.amount{min-width:0;flex:1;background:transparent;border:0;outline:0;color:var(--text);font-size:27px;font-weight:700;width:100%}.token{font-weight:800;border-radius:11px;padding:8px 11px;background:#1a2740;white-space:nowrap}.hint{color:var(--muted);font-size:12px}.arrow{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#1d2941;color:var(--cyan);margin:-5px auto;position:relative;z-index:1}.action{width:100%;border:0;border-radius:14px;padding:15px;margin-top:12px;font-weight:800;background:linear-gradient(90deg,var(--cyan),#a4f0cf);color:#07151a;cursor:pointer}.action.secondary{background:#27344f;color:var(--text)}.action:disabled{opacity:.5;cursor:not-allowed}.status{font-size:12px;color:var(--muted);margin-top:13px;min-height:18px}.notice{border:1px solid #5c4d2d;background:#251e14;color:#e9cb8a;border-radius:14px;padding:13px 15px;font-size:12px;margin-top:18px}.bottom{margin-top:22px;display:flex;justify-content:space-between;gap:15px;color:var(--muted);font-size:12px}.bottom a{color:var(--cyan);text-decoration:none}.hidden{display:none}
+    @media(max-width:760px){.wrap{padding:20px 14px}.top{margin-bottom:38px}.hero,.main{grid-template-columns:1fr}.hero{gap:22px}.statcard{padding:20px}.card{padding:17px}.bottom{flex-direction:column}.hero h1{font-size:45px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">M</div><span>MINGWE</span></div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <span class="network" aria-label="Network">SHADOWNET · TESTNET</span>
+      <button class="connect" id="connectBtn">Connect Temple</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">COMMUNITY AMM · TESTNET</div>
+      <h1>Swap simply.<br><span>Build together.</span></h1>
+      <p>Search indexed token records on Shadownet by name, symbol, or KT1 address. Search results are not automatically pool-compatible or tradable. This preview supports discovery only; transactions stay disabled until the AMM is deployed and verified.</p>
+      <div class="tagline"><span class="pill">FA2 token</span><span class="pill">No presale</span><span class="pill">Testnet only</span></div>
+    </div>
+    <div class="statcard">
+      <div class="stat-head"><span>Token overview</span><span id="chainLabel">SHADOWNET</span> · <span id="selectedChain">SHADOWNET</span></div><div class="stat-sub"><span id="headLevel">Indexer —</span> · <span id="headStatus">Checking network…</span></div>
+      <div class="stat-value" id="supplyValue">Loading… <span style="font-size:15px;color:var(--cyan)">MINGWE</span></div>
+      <div class="stat-sub" id="tokenMetaStatus">Metadata loading…</div><div class="hint" id="selectedTokenDecimals">Decimals: not verified</div>
+      <div class="mini-grid">
+        <div class="mini"><label>Token contract</label><strong id="selectedTokenAddress" style="font-size:12px;overflow-wrap:anywhere">KT1XWAT…mcajs6</strong></div>
+        <div class="mini"><label>AMM pool</label><strong id="poolState">Not deployed</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+    <div class="card">
+      <div class="tabs"><button class="tab active" id="swapTab">Swap</button><button class="tab" id="liquidityTab">Liquidity</button></div>
+      <div id="swapPanel">
+        <h2>Swap tokens</h2><p class="desc">Exchange XTZ and MINGWE through the pool.</p>
+        <div class="field"><div class="field-top"><span>Token search · selected network</span><span id="searchNetwork">Shadownet</span></div><input id="tokenSearch" type="search" placeholder="Name, symbol, or KT1 address" style="width:100%;background:#0a1120;border:1px solid #26324a;border-radius:12px;color:var(--text);padding:12px"><div class="hint">Search TzKT token index. Select a result to use it in the pair.</div><div id="tokenResults" style="display:grid;gap:7px;margin-top:10px;max-height:230px;overflow:auto"></div></div>
+        <div class="field"><div class="field-top"><span>You pay</span><span id="xtzBalance">Wallet not connected</span><span id="payBalance" class="hint"></span></div><div class="amount-row"><input class="amount" id="fromAmount" type="number" min="0" step="any" placeholder="0.00"><span class="token" id="fromToken">XTZ</span></div></div>
+        <div class="arrow">↓</div>
+        <div class="field"><div class="field-top"><span>You receive</span><span>MINGWE</span></div><div class="amount-row"><input class="amount" id="toAmount" type="number" min="0" step="any" placeholder="0.00" readonly><span class="token" id="toToken">MINGWE</span></div></div>
+        <div class="hint" id="quoteInfo">Quote requires a verified pool reserve snapshot.</div>
+        <button class="action" id="swapAction" disabled>Swap · pool not deployed/verified</button>
+        <div class="status" id="swapStatus">Swap is not active yet. No transaction will be sent.</div>
+      </div>
+      <div id="liquidityPanel" class="hidden">
+        <h2>Liquidity</h2><p class="desc">Provide both assets to create or add to the pool.</p>
+        <div class="field"><div class="field-top"><span>Selected FA token</span><span id="lpNetwork">Shadownet</span></div><div id="lpTokenName">MINGWE</div><div class="hint" id="lpTokenAddress">KT1XWAT… · token ID 0</div></div><div class="field"><div class="field-top"><span>Deposit amount</span><span>XTZ</span></div><div class="amount-row"><input class="amount" id="lpTez" type="number" min="0" placeholder="0.00"><span class="token">XTZ</span></div></div>
+        <div class="field"><div class="field-top"><span>Deposit amount</span><span id="lpTicker">FA2</span></div><div class="amount-row"><input class="amount" id="lpTokenAmount" type="number" min="0" placeholder="0.00"><span class="token" id="lpTokenBadge">FA2</span></div></div>
+        <button class="action" id="addLiquidity" disabled>Add liquidity · pool not verified</button><div class="field"><div class="field-top"><span>LP shares to withdraw</span><span id="lpShares">—</span></div><input id="removeShares" class="amount" type="number" min="0" placeholder="0.00"><button class="action secondary" id="removeLiquidity" disabled>Remove liquidity · pool not verified</button></div>
+        <div class="status" id="liquidityStatus">Pool is not registered on this network.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Wallet & network</h2><p class="desc">Connect a Tezos wallet to check your Shadownet account.</p>
+      <div class="field"><div class="field-top"><span>Connected address</span><span id="walletState">Disconnected</span></div><div id="walletAddress" style="font-size:13px;overflow-wrap:anywhere;color:var(--muted)">Connect wallet to display your address.</div></div>
+      <div class="field"><div class="field-top"><span>XTZ balance</span><span>Shadownet</span></div><div class="amount-row"><div class="amount" id="balanceValue">—</div><span class="token">XTZ</span></div></div>
+      <div class="field"><div class="field-top"><span>Selected token balance</span><span id="selectedTicker">FA2</span></div><div class="amount-row"><div class="amount" id="mingweBalanceValue">—</div><span class="token" id="tokenBalanceTicker">FA2</span></div><div class="hint" id="mingweBalanceStatus">Connect wallet to read token balance.</div></div>
+      <div class="notice"><strong>Testnet safety</strong><br>Use testnet funds only. Never enter your private key or seed phrase on this page. Swap and liquidity are intentionally disabled until the pool contract is verified.</div>
+      <div class="status" id="walletStatus">Temple Wallet connection via Beacon (TZIP-10).</div>
+    </div>
+  </section>
+  <footer class="bottom"><span>MINGWE AMM · Shadownet preview</span><span>Token: <a id="tokenExplorer" href="https://shadownet.tzkt.io/KT1XWATXQf1kWP6hk8MYZnJeW1cX5vmcajs6/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a> · Data provided by <a href="https://tzkt.io" target="_blank" rel="noreferrer">TzKT API</a></span></footer>
+</div>
+<script type="module">
+const NET={shadownet:{label:'Shadownet',rpc:'https://tezos-shadownet.octez.io',api:'https://api.shadownet.tzkt.io',beacon:'shadownet',explorer:'https://shadownet.tzkt.io'}};
+const MINGWE={network:'shadownet',contract:'KT1XWATXQf1kWP6hk8MYZnJeW1cX5vmcajs6',tokenId:0,name:'MINGWE',symbol:'MINGWE',decimals:null};
+// A pool is only added here after its chain, code hash, ABI, pair and storage are audited.
+const VERIFIED_POOLS={shadownet:[]};
+let chain='shadownet',token={...MINGWE},account=null,wallet=null,toolkit=null,BeaconWallet,BeaconEvent,TezosToolkit,debounce;
+const $=id=>document.getElementById(id),short=s=>s?`${s.slice(0,8)}…${s.slice(-6)}`:'—',api=()=>NET[chain].api;
+function rawFormat(raw,decimals,max=6){if(!Number.isInteger(decimals)||decimals<0||decimals>18)throw Error('Token decimals are not verified');let n=BigInt(String(raw||0)),base=10n**BigInt(decimals),w=n/base,f=(n%base).toString().padStart(decimals,'0').slice(0,max).replace(/0+$/,'');return w.toLocaleString('en-US')+(f?'.'+f:'')}
+async function get(url){let r=await fetch(url,{headers:{accept:'application/json'}});if(!r.ok)throw Error(`Indexer response ${r.status}`);return r.json()}
+async function metadata(t){if(!t.contract)throw Error('Select a token contract first');let q=new URLSearchParams({contract:t.contract,tokenId:String(t.tokenId),limit:'1'}),list=await get(`${api()}/v1/tokens?${q}`);if(!list.length)throw Error('Token is not indexed on this network');let x=list[0],d=x.metadata?.decimals;t.name=x.metadata?.name||t.name;t.symbol=x.metadata?.symbol||t.symbol;if(d!==undefined&&/^\d+$/.test(String(d))&&Number(d)>=0&&Number(d)<=18)t.decimals=Number(d);else t.decimals=null;t.supply=x.totalSupply;return t}
+function renderToken(){ $('selectedTicker').textContent=token.symbol||'FA';$('tokenBalanceTicker').textContent=token.symbol||'FA';$('selectedTokenAddress').textContent=token.contract||'Search token on selected network';$('lpTokenName').textContent=token.name||'Selected token';$('lpTokenAddress').textContent=token.contract?`${token.contract} · ID ${token.tokenId}`:'Search a token on Shadownet';$('toToken').textContent=token.symbol||'Select token';$('selectedTokenDecimals').textContent=`Decimals: ${Number.isInteger(token.decimals)?token.decimals:'not verified'}`;$('tokenExplorer').href=token.contract?`${NET[chain].explorer}/${token.contract}/tokens/${token.tokenId}`:NET[chain].explorer;$('tokenExplorer').textContent='Token explorer';$('lpNetwork').textContent=NET[chain].label;$('searchNetwork').textContent=NET[chain].label;$('selectedChain').textContent=chain.toUpperCase();}
+async function tokenBalance(){if(!account||!token.contract){$('mingweBalanceValue').textContent='—';return}if(!Number.isInteger(token.decimals)){$('mingweBalanceValue').textContent='Decimals unknown';return}let q=new URLSearchParams({account,'token.contract':token.contract,'token.tokenId':String(token.tokenId),limit:'1'}),rows=await get(`${api()}/v1/tokens/balances?${q}`),value=rawFormat(rows[0]?.balance||'0',token.decimals);$('mingweBalanceValue').textContent=value;$('mingweBalanceStatus').textContent='TzKT indexer balance; may lag chain head.'}
+async function sdk(){if(!BeaconWallet){[{BeaconWallet,BeaconEvent},{TezosToolkit}]=await Promise.all([import('https://esm.sh/@taquito/beacon-wallet@25.1.1'),import('https://esm.sh/@taquito/taquito@25.1.1')])}toolkit=new TezosToolkit(NET[chain].rpc);wallet=new BeaconWallet({name:'MINGWE AMM',iconUrl:'https://mingwe-token.github.io/mingwe/',network:{type:NET[chain].beacon,rpcUrl:NET[chain].rpc},enableMetrics:false});await wallet.client.subscribeToEvent(BeaconEvent.ACTIVE_ACCOUNT_SET,async a=>{if(a?.address){account=a.address;await accountUi()}})}
+async function accountUi(){if(!account||!toolkit||!wallet)return;toolkit.setWalletProvider(wallet);$('walletAddress').textContent=account;$('walletState').textContent=`Connected · ${NET[chain].label}`;$('connectBtn').textContent=short(account);try{let b=await toolkit.tz.getBalance(account),xtz=b.dividedBy(1e6).toFixed(4);$('balanceValue').textContent=xtz;$('xtzBalance').textContent=xtz+' XTZ';$('payBalance').textContent=xtz+' XTZ'}catch(e){$('balanceValue').textContent='Unavailable';$('xtzBalance').textContent='Unavailable'}try{await tokenBalance()}catch(e){$('mingweBalanceValue').textContent='Unavailable';$('mingweBalanceStatus').textContent=e.message}}
+async function connect(){let b=$('connectBtn');b.disabled=true;b.textContent='Connecting…';try{if(!wallet)await sdk();await wallet.requestPermissions();account=await wallet.getPKH();await accountUi()}catch(e){$('walletStatus').textContent=e.message||'Connection cancelled';b.textContent='Connect Temple'}finally{b.disabled=false}}
+async function disconnect(){try{if(wallet)await wallet.disconnect()}catch{}wallet=null;toolkit=null;account=null;$('walletAddress').textContent='Connect wallet to display address';$('walletState').textContent='Disconnected';$('balanceValue').textContent='—';$('xtzBalance').textContent='—';$('payBalance').textContent='—';$('mingweBalanceValue').textContent='—';$('connectBtn').textContent='Connect Temple'}
+async function head(){try{let h=await get(`${api()}/v1/head`);$('headLevel').textContent=`Block ${Number(h.level).toLocaleString()}`;$('headStatus').textContent=`${NET[chain].label} indexer ${h.synced===false?'syncing':'available'}`}catch(e){$('headLevel').textContent='Indexer unavailable';$('headStatus').textContent=e.message}}
+async function search(query){let box=$('tokenResults');box.replaceChildren();query=query.trim();if(query.length<2){box.textContent='Enter at least 2 characters or a KT1 address.';return}box.textContent='Searching selected network…';try{let rows=[];if(query.startsWith('KT1')){let q=new URLSearchParams({contract:query,limit:'20'});rows=await get(`${api()}/v1/tokens?${q}`)}else{let q=encodeURIComponent(query),paths=[`/v1/tokens?metadata.symbol.contains=${q}&sort.desc=lastTime&limit=15`,`/v1/tokens?metadata.name.contains=${q}&sort.desc=lastTime&limit=15`],lists=await Promise.all(paths.map(p=>fetch(api()+p).then(r=>r.ok?r.json():[]).catch(()=>[]))),map=new Map();for(let t of lists.flat())map.set(`${t.contract.address}:${t.tokenId}`,t);rows=[...map.values()].slice(0,25)}box.replaceChildren();if(!rows.length){box.textContent='No result indexed. Try exact KT1 address.';return}for(let t of rows){let m=t.metadata||{},addr=t.contract?.address||t.contract,button=document.createElement('button');button.className='result';button.textContent=`${m.symbol||m.name||'FA token'} · ${m.name||'unnamed'} · ID ${t.tokenId} · ${short(addr)}`;button.addEventListener('click',async()=>{token={network:chain,contract:addr,tokenId:Number(t.tokenId),name:m.name||m.symbol||'FA token',symbol:m.symbol||'FA2',decimals:m.decimals!==undefined&&/^\d+$/.test(String(m.decimals))?Number(m.decimals):null};try{await metadata(token)}catch{}renderToken();$('tokenSearch').value=`${token.symbol} · ${short(addr)}`;box.replaceChildren();if(account)await tokenBalance();$('swapStatus').textContent='Token selected. A verified pool is still required before trading.';$('liquidityStatus').textContent='Token selected; LP actions locked pending pool verification.'});box.appendChild(button)}}catch(e){box.textContent=`Search error: ${e.message}`}}
+$('connectBtn').addEventListener('click',()=>account?disconnect():connect());$('tokenSearch').addEventListener('input',e=>{clearTimeout(debounce);debounce=setTimeout(()=>search(e.target.value),400)});
+$('swapTab').addEventListener('click',()=>{$('swapTab').classList.add('active');$('liquidityTab').classList.remove('active');$('swapPanel').classList.remove('hidden');$('liquidityPanel').classList.add('hidden')});$('liquidityTab').addEventListener('click',()=>{$('liquidityTab').classList.add('active');$('swapTab').classList.remove('active');$('liquidityPanel').classList.remove('hidden');$('swapPanel').classList.add('hidden')});$('fromAmount').addEventListener('input',()=>{$('toAmount').value='';$('quoteInfo').textContent='No verified pool reserves; output is not estimated.'});$('fromToken').addEventListener('click',()=>{$('swapStatus').textContent='Pair in this preview is XTZ ↔ selected FA token.'});$('toToken').addEventListener('click',()=>$('tokenSearch').focus());
+// No wallet operation is bound to Swap/Add/Remove until verified pools are deployed.
+renderToken();head();metadata(token).then(t=>{renderToken();if(t.supply&&Number.isInteger(t.decimals)&&t.decimals>=0&&t.decimals<=18)$('supplyValue').textContent=rawFormat(t.supply,t.decimals)+' '+t.symbol;else if(t.supply)$('supplyValue').textContent='Supply raw units · decimals unknown';$('tokenMetaStatus').textContent=`TzKT metadata loaded · ${Number.isInteger(t.decimals)?t.decimals+' decimals':'decimals unavailable'} · ID ${t.tokenId}`}).catch(e=>$('tokenMetaStatus').textContent='Token metadata unavailable: '+e.message);
+(async()=>{try{await sdk();let a=await wallet.client.getActiveAccount();if(a?.address){account=a.address;await accountUi()}}catch(e){console.info('No saved wallet session',e.message)}})();
+</script>
+</body>
+</html>
