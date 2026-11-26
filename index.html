@@ -32,7 +32,7 @@
     <div>
       <div class="eyebrow">COMMUNITY AMM · TESTNET</div>
       <h1>Swap simply.<br><span>Build together.</span></h1>
-      <p>Search indexed token records on Shadownet by name, symbol, or KT1 address. Search results are not automatically pool-compatible or tradable. This preview supports discovery only; transactions stay disabled until the AMM is deployed and verified.</p>
+      <p>MINGWE FA2 is selected on Shadownet (token ID 0, 6 decimals). Search indexed token records by name, symbol, or KT1 address. Search results are not automatically pool-compatible or tradable. Transactions stay disabled until the AMM is deployed and verified.</p>
       <div class="tagline"><span class="pill">FA2 token</span><span class="pill">No presale</span><span class="pill">Testnet only</span></div>
     </div>
     <div class="statcard">
@@ -40,7 +40,7 @@
       <div class="stat-value" id="supplyValue">Loading… <span style="font-size:15px;color:var(--cyan)">MINGWE</span></div>
       <div class="stat-sub" id="tokenMetaStatus">Metadata loading…</div><div class="hint" id="selectedTokenDecimals">Decimals: not verified</div>
       <div class="mini-grid">
-        <div class="mini"><label>Token contract</label><strong id="selectedTokenAddress" style="font-size:12px;overflow-wrap:anywhere">KT1XWAT…mcajs6</strong></div>
+        <div class="mini"><label>Token contract</label><strong id="selectedTokenAddress" style="font-size:12px;overflow-wrap:anywhere">KT1EHp…JDFy</strong></div>
         <div class="mini"><label>AMM pool</label><strong id="poolState">Not deployed</strong></div>
       </div>
     </div>
@@ -61,10 +61,10 @@
       </div>
       <div id="liquidityPanel" class="hidden">
         <h2>Liquidity</h2><p class="desc">Provide both assets to create or add to the pool.</p>
-        <div class="field"><div class="field-top"><span>Selected FA token</span><span id="lpNetwork">Shadownet</span></div><div id="lpTokenName">MINGWE</div><div class="hint" id="lpTokenAddress">KT1XWAT… · token ID 0</div></div><div class="field"><div class="field-top"><span>Deposit amount</span><span>XTZ</span></div><div class="amount-row"><input class="amount" id="lpTez" type="number" min="0" placeholder="0.00"><span class="token">XTZ</span></div></div>
+        <div class="field"><div class="field-top"><span>Selected FA token</span><span id="lpNetwork">Shadownet</span></div><div id="lpTokenName">MINGWE</div><div class="hint" id="lpTokenAddress">KT1EHp… · token ID 0</div></div><div class="field"><div class="field-top"><span>Deposit amount</span><span>XTZ</span></div><div class="amount-row"><input class="amount" id="lpTez" type="number" min="0" placeholder="0.00"><span class="token">XTZ</span></div></div>
         <div class="field"><div class="field-top"><span>Deposit amount</span><span id="lpTicker">FA2</span></div><div class="amount-row"><input class="amount" id="lpTokenAmount" type="number" min="0" placeholder="0.00"><span class="token" id="lpTokenBadge">FA2</span></div></div>
         <button class="action" id="addLiquidity" disabled>Add liquidity · pool not verified</button><div class="field"><div class="field-top"><span>LP shares to withdraw</span><span id="lpShares">—</span></div><input id="removeShares" class="amount" type="number" min="0" placeholder="0.00"><button class="action secondary" id="removeLiquidity" disabled>Remove liquidity · pool not verified</button></div>
-        <div class="status" id="liquidityStatus">Pool is not registered on this network.</div>
+        <div class="status" id="liquidityStatus">MINGWE token is confirmed in the indexer; AMM pool is not deployed/verified yet.</div>
       </div>
     </div>
 
@@ -77,7 +77,7 @@
       <div class="status" id="walletStatus">Temple Wallet connection via Beacon (TZIP-10).</div>
     </div>
   </section>
-  <footer class="bottom"><span>MINGWE AMM · Shadownet preview</span><span>Token: <a id="tokenExplorer" href="https://shadownet.tzkt.io/KT1EHpDFoRiiJriVgEkfYXeH8ALZ99NiJDFy/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a> · Data provided by <a href="https://tzkt.io" target="_blank" rel="noreferrer">TzKT API</a></span></footer>
+  <footer class="bottom"><span>MINGWE AMM · Shadownet testnet</span><span>Token: <a id="tokenExplorer" href="https://shadownet.tzkt.io/KT1EHpDFoRiiJriVgEkfYXeH8ALZ99NiJDFy/tokens/0" target="_blank" rel="noreferrer">View on TzKT</a> · Data provided by <a href="https://tzkt.io" target="_blank" rel="noreferrer">TzKT API</a></span></footer>
 </div>
 <script type="module">
 const NET={shadownet:{label:'Shadownet',rpc:'https://rpc.shadownet.teztnets.com',api:'https://api.shadownet.tzkt.io',beacon:'shadownet',explorer:'https://shadownet.tzkt.io'}};
