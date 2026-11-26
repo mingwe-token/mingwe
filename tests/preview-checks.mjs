@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+for(const s of ['shadownet','tokenSearch','swapAction','addLiquidity','removeLiquidity','VERIFIED_POOLS','Data provided by','network:{type:NET[chain].beacon,rpcUrl:NET[chain].rpc}'])assert.ok(html.includes(s),`missing ${s}`);
+assert.doesNotMatch(html,/mainnet|networkSelect|changeChain/i,'release page must be Shadownet-only');
+assert.match(html,/const VERIFIED_POOLS=\{shadownet:\[\]\}/);
+for(const id of ['swapAction','addLiquidity','removeLiquidity'])assert.match(html,new RegExp(`id="${id}" disabled`));
+assert.doesNotMatch(html,/const AMM_ADDRESS\s*=\s*"KT1/);
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);assert.equal(ids.length,new Set(ids).size,'duplicate id');
+const js=html.slice(html.indexOf('<script type="module">'),html.indexOf('</script>'));const refs=new Set([...js.matchAll(/\$\('([^']+)'\)/g)].map(x=>x[1]));for(const id of refs)assert.ok(ids.includes(id),`missing DOM id ${id}`);
+console.log('Shadownet-only preview safety checks passed.');
