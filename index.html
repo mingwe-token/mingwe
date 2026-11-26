@@ -41,7 +41,7 @@
       <div class="stat-sub" id="tokenMetaStatus">Metadata loading…</div><div class="hint" id="selectedTokenDecimals">Decimals: not verified</div>
       <div class="mini-grid">
         <div class="mini"><label>Token contract</label><strong id="selectedTokenAddress" style="font-size:12px;overflow-wrap:anywhere">KT1EHp…JDFy</strong></div>
-        <div class="mini"><label>AMM pool</label><strong id="poolState">Not deployed</strong></div>
+        <div class="mini"><label>Holder wallet · 1M MINGWE</label><strong id="holderAddress" style="font-size:12px;overflow-wrap:anywhere">tz1PosPdPEiV4iioYVZbCozFBz4iySN5GYed</strong></div><div class="mini"><label>AMM pool</label><strong id="poolState">Not deployed</strong></div>
       </div>
     </div>
   </section>
@@ -82,6 +82,8 @@
 <script type="module">
 const NET={shadownet:{label:'Shadownet',rpc:'https://rpc.shadownet.teztnets.com',api:'https://api.shadownet.tzkt.io',beacon:'shadownet',explorer:'https://shadownet.tzkt.io'}};
 const MINGWE={network:'shadownet',contract:'KT1EHpDFoRiiJriVgEkfYXeH8ALZ99NiJDFy',tokenId:0,name:'MINGWE',symbol:'MINGWE',decimals:null};
+// Wallet confirmed by the user as the holder of the full 1,000,000 MINGWE supply.
+const MINGWE_HOLDER='tz1PosPdPEiV4iioYVZbCozFBz4iySN5GYed';
 // A pool is only added here after its chain, code hash, ABI, pair and storage are audited.
 const VERIFIED_POOLS={shadownet:[]};
 let chain='shadownet',token={...MINGWE},account=null,wallet=null,toolkit=null,BeaconWallet,BeaconEvent,TezosToolkit,debounce;
